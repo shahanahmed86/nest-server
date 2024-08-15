@@ -1,0 +1,45 @@
+name: 'app-test'
+
+services:
+  server:
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+    build:
+      context: .
+      target: test
+    restart: 'no'
+    networks:
+      - app
+    volumes:
+      - /app/node_modules
+    env_file:
+      - .env.development.local
+    command: npm run test
+
+  db:
+    restart: 'no'
+    volumes:
+      - db_test:/var/lib/postgresql/data
+    env_file:
+      - .env.development.local
+
+  cache:
+    restart: 'no'
+    command: redis-server --appendonly yes --requirepass $REDIS_PASSWORD
+    volumes:
+      - cache_test:/data
+    env_file:
+      - .env.development.local
+
+volumes:
+  db_test:
+    driver: local
+  cache_test:
+    driver: local
+
+networks:
+  app:
+    driver: bridge

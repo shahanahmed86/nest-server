@@ -1,0 +1,75 @@
+name: 'app-dev'
+
+services:
+  web:
+    tty: true
+    image: nginx:1.27
+    depends_on:
+      server:
+        condition: service_healthy
+    restart: unless-stopped
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    networks:
+      - app
+
+  server:
+    tty: true
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+    build:
+      context: .
+      target: dev
+    restart: unless-stopped
+    volumes:
+      - /app/node_modules
+      - ./:/app
+    env_file:
+      - .env.development.local
+    command: npm run start:dev
+    networks:
+      - app
+
+  db:
+    tty: true
+    restart: unless-stopped
+    volumes:
+      - db_dev:/var/lib/postgresql/data
+    env_file:
+      - .env.development.local
+
+  adminer:
+    tty: true
+    image: adminer
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    networks:
+      - app
+
+  cache:
+    tty: true
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass $REDIS_PASSWORD
+    volumes:
+      - cache_dev:/data
+    env_file:
+      - .env.development.local
+
+volumes:
+  db_dev:
+    driver: local
+  cache_dev:
+    driver: local
+
+networks:
+  app:
+    driver: bridge
