@@ -7,7 +7,7 @@ const ENVIRONMENTS: Environment[] = ['development', 'production', 'test'];
 type Protocol = 'http' | 'https';
 const PROTOCOLS: Protocol[] = ['http', 'https'];
 
-class EnvVars {
+export class EnvVars {
 	@IsEnum(ENVIRONMENTS)
 	NODE_ENV: Environment;
 

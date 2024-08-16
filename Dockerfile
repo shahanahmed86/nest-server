@@ -3,7 +3,7 @@ LABEL maintainer="Shahan <shahan.khaan@gmail.com>"
 LABEL description="This is a nest-js boilerplate"
 ENV NODE_ENV=production
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends default-mysql-client curl \
+  && apt-get install -y --no-install-recommends default-mysql-client curl procps \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 EXPOSE 7000
