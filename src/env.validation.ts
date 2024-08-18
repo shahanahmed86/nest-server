@@ -1,5 +1,5 @@
 import { plainToInstance } from 'class-transformer';
-import { IsEnum, IsNumber, validateSync } from 'class-validator';
+import { IsEnum, IsNumber, IsString, validateSync } from 'class-validator';
 
 type Environment = 'development' | 'production' | 'test';
 const ENVIRONMENTS: Environment[] = ['development', 'production', 'test'];
@@ -22,27 +22,34 @@ export class EnvVars {
 	@IsNumber()
 	BCRYPT_SALT: number;
 
+	@IsString()
 	JWT_SECRET: string;
 
 	@IsNumber()
 	JWT_EXPIRY: number;
 
+	@IsString()
 	DB_HOST: string;
 
 	@IsNumber()
 	DB_PORT: number;
 
+	@IsString()
 	DB_USER: string;
 
+	@IsString()
 	DB_PASS: string;
 
+	@IsString()
 	DB_NAME: string;
 
+	@IsString()
 	REDIS_HOST: string;
 
 	@IsNumber()
 	REDIS_PORT: number;
 
+	@IsString()
 	REDIS_PASSWORD: string;
 }
 
@@ -50,9 +57,7 @@ export function validate(config: Record<string, unknown>) {
 	const validatedConfig = plainToInstance(EnvVars, config, {
 		enableImplicitConversion: true,
 	});
-	const errors = validateSync(validatedConfig, {
-		skipMissingProperties: false,
-	});
+	const errors = validateSync(validatedConfig, { skipMissingProperties: false });
 
 	if (errors.length) throw new Error(errors.toString());
 	return validatedConfig;
