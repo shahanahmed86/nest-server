@@ -2,7 +2,6 @@ name: 'app-dev'
 
 services:
   web:
-    tty: true
     image: nginx:1.27
     depends_on:
       server:
@@ -16,7 +15,7 @@ services:
       - app
 
   server:
-    tty: true
+    user: root
     depends_on:
       db:
         condition: service_healthy
@@ -36,7 +35,6 @@ services:
       - app
 
   db:
-    tty: true
     restart: unless-stopped
     volumes:
       - db_dev:/var/lib/postgresql/data
@@ -44,7 +42,6 @@ services:
       - .env.development.local
 
   adminer:
-    tty: true
     image: adminer
     depends_on:
       db:
@@ -56,7 +53,6 @@ services:
       - app
 
   cache:
-    tty: true
     restart: unless-stopped
     command: redis-server --appendonly yes --requirepass $REDIS_PASSWORD
     volumes:
