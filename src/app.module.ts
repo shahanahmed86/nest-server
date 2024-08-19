@@ -1,5 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import config from './config';
@@ -10,15 +10,15 @@ import { FileUploadMiddleware } from './middleware/fileupload.middleware';
 import { HelmetMiddleware } from './middleware/helmet.middleware';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { RateLimiterMiddleware } from './middleware/rate.middleware';
-import { TypeOrmConfigService } from './database/typeorm.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import typeorm from './database';
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({ isGlobal: true, load: [config] }),
+		ConfigModule.forRoot({ isGlobal: true, load: [config, typeorm] }),
 		TypeOrmModule.forRootAsync({
-			imports: [ConfigModule],
-			useClass: TypeOrmConfigService,
+			inject: [ConfigService],
+			useFactory: async (svc: ConfigService) => svc.get('typeorm'),
 		}),
 	],
 	controllers: [AppController],

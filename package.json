@@ -17,6 +17,10 @@
 		"start:dev": "nest start --watch",
 		"start:debug": "nest start --debug --watch",
 		"start:prod": "node dist/main",
+		"typeorm": "typeorm-ts-node-commonjs",
+		"typeorm:create": "npm run typeorm -- migration:create src/database/migrations/$npm_config_name",
+		"typeorm:up": "npm run typeorm -- migration:run -d src/database",
+		"typeorm:down": "npm run typeorm -- migration:revert -d src/database",
 		"test": "jest",
 		"test:watch": "jest --watch",
 		"test:cov": "jest --coverage",
@@ -44,7 +48,8 @@
 		"onchange": "^7.1.0",
 		"reflect-metadata": "^0.2.0",
 		"rxjs": "^7.8.1",
-		"typeorm": "^0.3.20"
+		"typeorm": "^0.3.20",
+		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^19.4.0",
