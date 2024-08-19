@@ -1,18 +1,13 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { NextFunction, Request, Response } from 'express';
 import * as chalk from 'chalk';
+import { NextFunction, Request, Response } from 'express';
 import * as morgan from 'morgan';
-import { EnvVars } from 'src/env.validation';
+import { configs } from 'src/config';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-	constructor(private readonly env: ConfigService<EnvVars, true>) {}
 	use(...args: [Request, Response, NextFunction]) {
-		const protocol = this.env.get('APP_PROTOCOL');
-		const host = this.env.get('APP_HOST');
-		const baseUrl = `${protocol}://${host}`;
-		morgan.token('host', () => baseUrl);
+		morgan.token('host', () => configs.app.baseUrl);
 
 		morgan.token('error', (_, res: Response) => {
 			if (!res.locals.error) return '';
