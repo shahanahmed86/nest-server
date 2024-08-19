@@ -1,8 +1,11 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import config from './config';
+import typeorm from './database';
+import redis from './library/redis.library';
 import { CompressionMiddleware } from './middleware/compression.middleware';
 import { CookieParserMiddleware } from './middleware/cookie.middleware';
 import { CorsMiddleware } from './middleware/cors.middleware';
@@ -10,12 +13,10 @@ import { FileUploadMiddleware } from './middleware/fileupload.middleware';
 import { HelmetMiddleware } from './middleware/helmet.middleware';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { RateLimiterMiddleware } from './middleware/rate.middleware';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import typeorm from './database';
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({ isGlobal: true, load: [config, typeorm] }),
+		ConfigModule.forRoot({ isGlobal: true, load: [config, typeorm, redis] }),
 		TypeOrmModule.forRootAsync({
 			inject: [ConfigService],
 			useFactory: async (svc: ConfigService) => svc.get('typeorm'),

@@ -91,7 +91,7 @@ const allEnvs = {
 		port: process.env.REDIS_PORT,
 		pass: process.env.REDIS_PASSWORD,
 		get url() {
-			return `redis://${this.pass}@${this.host}:${this.port}`;
+			return `redis://:${this.pass}@${this.host}:${this.port}`;
 		},
 	},
 };
