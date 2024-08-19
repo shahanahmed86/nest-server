@@ -29,6 +29,9 @@ export class EnvVars {
 	@IsNumber()
 	JWT_EXPIRY: number;
 
+	@IsEnum(['mysql', 'mariadb'])
+	DB_DIALECT: 'mysql' | 'mariadb';
+
 	@IsString()
 	DB_HOST: string;
 

@@ -28,6 +28,7 @@
 		"@nestjs/config": "^3.2.3",
 		"@nestjs/core": "^10.0.0",
 		"@nestjs/platform-express": "^10.0.0",
+		"@nestjs/typeorm": "^10.0.2",
 		"chalk": "^4.1.2",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.14.1",
@@ -39,9 +40,11 @@
 		"helmet": "^7.1.0",
 		"husky": "^9.1.4",
 		"morgan": "^1.10.0",
+		"mysql2": "^3.11.0",
 		"onchange": "^7.1.0",
 		"reflect-metadata": "^0.2.0",
-		"rxjs": "^7.8.1"
+		"rxjs": "^7.8.1",
+		"typeorm": "^0.3.20"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^19.4.0",

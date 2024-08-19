@@ -10,9 +10,17 @@ import { FileUploadMiddleware } from './middleware/fileupload.middleware';
 import { HelmetMiddleware } from './middleware/helmet.middleware';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { RateLimiterMiddleware } from './middleware/rate.middleware';
+import { TypeOrmConfigService } from './database/typeorm.config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-	imports: [ConfigModule.forRoot(configOptions)],
+	imports: [
+		ConfigModule.forRoot(configOptions),
+		TypeOrmModule.forRootAsync({
+			imports: [ConfigModule],
+			useClass: TypeOrmConfigService,
+		}),
+	],
 	controllers: [AppController],
 	providers: [AppService],
 })
