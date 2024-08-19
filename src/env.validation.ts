@@ -1,3 +1,4 @@
+import { ConfigModuleOptions } from '@nestjs/config';
 import { plainToInstance } from 'class-transformer';
 import { IsEnum, IsNumber, IsString, validateSync } from 'class-validator';
 
@@ -53,12 +54,14 @@ export class EnvVars {
 	REDIS_PASSWORD: string;
 }
 
-export function validate(config: Record<string, unknown>) {
-	const validatedConfig = plainToInstance(EnvVars, config, {
-		enableImplicitConversion: true,
-	});
-	const errors = validateSync(validatedConfig, { skipMissingProperties: false });
+export const configOptions: ConfigModuleOptions = {
+	validate(config) {
+		const validatedConfig = plainToInstance(EnvVars, config, {
+			enableImplicitConversion: true,
+		});
+		const errors = validateSync(validatedConfig, { skipMissingProperties: false });
 
-	if (errors.length) throw new Error(errors.toString());
-	return validatedConfig;
-}
+		if (errors.length) throw new Error(errors.toString());
+		return validatedConfig;
+	},
+};
