@@ -1,9 +1,13 @@
 {
 	"name": "nest-server",
 	"version": "0.0.1",
-	"description": "",
-	"author": "",
-	"private": true,
+	"description": "This is a nest-js boilerplate",
+	"author": "Shahan Ahmed Khan",
+	"engines": {
+		"node": "^20",
+		"npm": "^10"
+	},
+	"engineStrict": true,
 	"license": "MIT",
 	"scripts": {
 		"prepare": "husky",
@@ -32,6 +36,7 @@
 		"@nestjs/config": "^3.2.3",
 		"@nestjs/core": "^10.0.0",
 		"@nestjs/platform-express": "^10.0.0",
+		"@nestjs/swagger": "^7.4.0",
 		"@nestjs/typeorm": "^10.0.2",
 		"chalk": "^4.1.2",
 		"class-transformer": "^0.5.1",
