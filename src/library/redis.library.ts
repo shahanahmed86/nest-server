@@ -12,22 +12,19 @@ export class CacheService {
 	constructor() {
 		this.client = createClient({ password, url });
 
-		this.client.on('error', (err) => console.log('Cache Client Error', err));
-		this.client.on('connect', () => console.log('Cache Client Connected'));
-
 		this.getConnected();
 	}
 
 	async getConnected() {
 		if (this.client.isReady) return;
+
 		await this.client.connect();
 	}
 
 	async getDisconnected() {
 		if (!this.client.isReady) return;
 
-		await this.client.quit(); // Quit gracefully closes the connection
-		console.log('Cache Client Disconnected');
+		await this.client.quit();
 	}
 
 	setEx<T extends string>(key: string, value: T, expiry = configs.jwt.expiry) {

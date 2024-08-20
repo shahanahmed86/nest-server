@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import config from './config';
-import typeorm from './database';
+import typeorm from './typeorm';
 import redis from './library/redis.library';
 import { CompressionMiddleware } from './middleware/compression.middleware';
 import { CookieParserMiddleware } from './middleware/cookie.middleware';
