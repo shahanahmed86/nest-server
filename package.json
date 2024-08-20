@@ -12,9 +12,9 @@
 	"scripts": {
 		"prepare": "husky",
 		"build": "nest build",
-		"lint": "eslint -c .eslintrc.js '{src,apps,libs,test}/**/*.{ts,js}'",
+		"lint": "eslint -c .eslintrc.json '{src,apps,libs,test}/**/*.{ts,js}'",
 		"format": "prettier --config .prettierrc --check  'src/**/*.{ts,js}' 'test/**/*.{ts,js}'",
-		"lint:fix": "eslint -c .eslintrc.js '{src,apps,libs,test}/**/*.{ts,js}' --fix",
+		"lint:fix": "eslint -c .eslintrc.json '{src,apps,libs,test}/**/*.{ts,js}' --fix",
 		"format:fix": "prettier --config .prettierrc --write 'src/**/*.{ts,js}' 'test/**/*.{ts,js}'",
 		"format:watch": "onchange 'src/**/*.{ts,js}' 'test/**/*.{ts,js}' --exclude-path .prettierignore -- prettier --config .prettierrc --write {{changed}}",
 		"start": "nest start",

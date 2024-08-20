@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Base {
@@ -12,5 +12,6 @@ export class Base {
 	updatedAt: string;
 
 	@Column({ type: 'timestamp', nullable: true })
+	@DeleteDateColumn()
 	deletedAt?: string;
 }

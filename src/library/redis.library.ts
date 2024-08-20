@@ -1,10 +1,9 @@
 import { registerAs } from '@nestjs/config';
 import { createClient } from 'redis';
+import { ONE_SECOND } from 'src/utils/constant.util';
 import { configs } from '../config';
 
 const { url, pass: password } = configs.cache;
-
-const ONE_SECOND = 1000;
 
 export class CacheService {
 	private client: ReturnType<typeof createClient>;
