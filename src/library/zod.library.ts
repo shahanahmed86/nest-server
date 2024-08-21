@@ -3,6 +3,7 @@ import {
 	ArgumentsHost,
 	Catch,
 	ExceptionFilter,
+	HttpStatus,
 	Injectable,
 	PipeTransform,
 } from '@nestjs/common';
@@ -13,7 +14,7 @@ export class ZodFilter<T extends ZodError> implements ExceptionFilter {
 	catch(exception: T, host: ArgumentsHost) {
 		const ctx = host.switchToHttp();
 		const response = ctx.getResponse();
-		const status = 400;
+		const status = HttpStatus.BAD_REQUEST;
 		response.status(status).json({
 			errors: exception.errors,
 			message: exception.message,

@@ -1,6 +1,6 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Query } from '@nestjs/common';
 import { ApiQuery, ApiResponse } from '@nestjs/swagger';
-import { PaginatedDto } from 'src/app.dto';
+import { PaginatedDto, ValidationError } from 'src/app.dto';
 import { ZodPipe } from 'src/library/zod.library';
 import { Genders } from 'src/typeorm/entities/genders.entity';
 import { Paginated } from 'src/types/common.type';
@@ -14,7 +14,8 @@ export class GendersController {
 
 	@Get()
 	@ApiQuery({ type: PaginatedDto })
-	@ApiResponse({ status: 200, type: GetAllGendersDto })
+	@ApiResponse({ status: HttpStatus.OK, type: GetAllGendersDto })
+	@ApiResponse({ status: HttpStatus.BAD_REQUEST, type: ValidationError })
 	findAll(@Query(new ZodPipe(PaginatedQuery)) query: PaginatedQuery): Promise<Paginated<Genders>> {
 		return this.gendersService.findAll(query);
 	}
