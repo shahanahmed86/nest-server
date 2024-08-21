@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GendersModule } from './api/genders/genders.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import config from './config';
@@ -21,6 +22,7 @@ import { RateLimiterMiddleware } from './middleware/rate.middleware';
 			inject: [ConfigService],
 			useFactory: async (svc: ConfigService) => svc.get('typeorm'),
 		}),
+		GendersModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
