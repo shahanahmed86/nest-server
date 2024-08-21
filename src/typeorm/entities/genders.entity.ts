@@ -1,13 +1,13 @@
 import { Column, Entity, OneToMany } from 'typeorm';
-import { GENDER_TABLE } from '../constants/genders.constant';
+import { GENDERS_TABLE } from '../constants/genders.constant';
 import { Base } from './base.entity';
-import { User } from './users.entity';
+import { Users } from './users.entity';
 
-@Entity(GENDER_TABLE)
-export class Gender extends Base {
+@Entity(GENDERS_TABLE)
+export class Genders extends Base {
 	@Column()
 	name: string;
 
-	@OneToMany(() => User, (entity) => entity.roleId)
-	users?: User[];
+	@OneToMany(() => Users, (entity) => entity.roleId)
+	users?: Users[];
 }

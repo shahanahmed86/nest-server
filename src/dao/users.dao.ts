@@ -1,11 +1,11 @@
-import { USER_TABLE } from '../typeorm/constants/users.constant';
-import { User } from '../typeorm/entities/users.entity';
+import { USERS_TABLE } from '../typeorm/constants/users.constant';
+import { Users } from '../typeorm/entities/users.entity';
 import BaseDao from './base.dao';
 
-class UserDao extends BaseDao<User> {
+class UsersDao extends BaseDao<Users> {
 	constructor() {
-		super(User, USER_TABLE);
+		super(Users, USERS_TABLE);
 	}
 }
 
-export default UserDao;
+export default UsersDao;

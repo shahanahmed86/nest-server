@@ -1,11 +1,11 @@
-import { GENDER_TABLE } from 'src/typeorm/constants/genders.constant';
-import { Gender } from '../typeorm/entities/genders.entity';
+import { GENDERS_TABLE } from 'src/typeorm/constants/genders.constant';
+import { Genders } from '../typeorm/entities/genders.entity';
 import BaseDao from './base.dao';
 
-class GenderDao extends BaseDao<Gender> {
+class GendersDao extends BaseDao<Genders> {
 	constructor() {
-		super(Gender, GENDER_TABLE);
+		super(Genders, GENDERS_TABLE);
 	}
 }
 
-export default GenderDao;
+export default GendersDao;

@@ -1,11 +1,11 @@
-import { ROLE_TABLE } from 'src/typeorm/constants/roles.constant';
-import { Role } from '../typeorm/entities/roles.entity';
+import { ROLES_TABLE } from 'src/typeorm/constants/roles.constant';
+import { Roles } from '../typeorm/entities/roles.entity';
 import BaseDao from './base.dao';
 
-class RoleDao extends BaseDao<Role> {
+class RolesDao extends BaseDao<Roles> {
 	constructor() {
-		super(Role, ROLE_TABLE);
+		super(Roles, ROLES_TABLE);
 	}
 }
 
-export default RoleDao;
+export default RolesDao;

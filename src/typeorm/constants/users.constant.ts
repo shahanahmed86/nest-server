@@ -1,8 +1,8 @@
-import { User } from '../entities/users.entity';
+import { Users } from '../entities/users.entity';
 
-export const USER_TABLE = 'users';
+export const USERS_TABLE = 'users';
 
-export const USER_TABLE_INDEXED_COLUMNS: (keyof User)[] = [
+export const USERS_TABLE_INDEXED_COLUMNS: (keyof Users)[] = [
 	'email',
 	'phone',
 	'firstName',

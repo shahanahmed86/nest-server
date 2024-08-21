@@ -1,15 +1,15 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { USER_TABLE, USER_TABLE_INDEXED_COLUMNS } from '../constants/users.constant';
+import { USERS_TABLE, USERS_TABLE_INDEXED_COLUMNS } from '../constants/users.constant';
 import base from './base.migration';
 
 export class CreateUserMigration1724067310118 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: USER_TABLE,
+				name: USERS_TABLE,
 				indices: [
 					{
-						columnNames: USER_TABLE_INDEXED_COLUMNS,
+						columnNames: USERS_TABLE_INDEXED_COLUMNS,
 						name: 'idx_email_phone_firstName_last_name',
 						isFulltext: true,
 					},
@@ -69,6 +69,6 @@ export class CreateUserMigration1724067310118 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable(USER_TABLE);
+		await queryRunner.dropTable(USERS_TABLE);
 	}
 }

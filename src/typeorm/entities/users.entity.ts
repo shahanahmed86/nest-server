@@ -1,11 +1,11 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { USER_TABLE } from '../constants/users.constant';
+import { USERS_TABLE } from '../constants/users.constant';
 import { Base } from './base.entity';
-import { Gender } from './genders.entity';
-import { Role } from './roles.entity';
+import { Genders } from './genders.entity';
+import { Roles } from './roles.entity';
 
-@Entity(USER_TABLE)
-export class User extends Base {
+@Entity(USERS_TABLE)
+export class Users extends Base {
 	@Column({ nullable: true })
 	firstName?: string;
 
@@ -33,12 +33,12 @@ export class User extends Base {
 	@Column({ type: 'varchar', generated: 'uuid' })
 	roleId!: string;
 
-	@ManyToOne(() => Role, (entity) => entity.users)
-	role?: Role;
+	@ManyToOne(() => Roles, (entity) => entity.users)
+	role?: Roles;
 
 	@Column({ type: 'varchar', generated: 'uuid' })
 	genderId!: string;
 
-	@ManyToOne(() => Gender, (entity) => entity.users)
-	gender?: Gender;
+	@ManyToOne(() => Genders, (entity) => entity.users)
+	gender?: Genders;
 }
