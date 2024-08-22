@@ -37,5 +37,6 @@ file_env 'DB_NAME'
 file_env 'REDIS_HOST'
 file_env 'REDIS_PORT'
 file_env 'REDIS_PASSWORD'
+file_env 'APP_ADMIN'
 
 exec "$@"

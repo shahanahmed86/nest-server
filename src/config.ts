@@ -56,6 +56,10 @@ const Configs = z.object({
 		pass: z.string().min(1).default('thinktwice'),
 		url: z.string().min(1).default('redis://:thinktwice@cache:6379'),
 	}),
+	admin: z.object({
+		email: z.string().email().default('developer.shahan@gmail.com'),
+		password: z.string().min(1).default('123Abc456'),
+	}),
 });
 
 type Configs = z.infer<typeof Configs>;
@@ -93,6 +97,10 @@ const allEnvs = {
 		get url() {
 			return `redis://:${this.pass}@${this.host}:${this.port}`;
 		},
+	},
+	admin: {
+		email: process.env.APP_ADMIN.split('::')[0],
+		password: process.env.APP_ADMIN.split('::')[1],
 	},
 };
 
