@@ -7,7 +7,7 @@ import { Users } from './users.entity';
 @Entity(GENDERS_TABLE)
 export class Genders extends Base {
 	@Column()
-	@ApiProperty()
+	@ApiProperty({ type: String })
 	name: string;
 
 	@OneToMany(() => Users, (entity) => entity.roleId)

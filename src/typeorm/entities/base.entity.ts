@@ -4,19 +4,19 @@ import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeor
 @Entity()
 export class Base {
 	@PrimaryGeneratedColumn('uuid')
-	@ApiProperty()
+	@ApiProperty({ type: String })
 	id: string;
 
 	@Column({ type: 'timestamp', default: 'CURRENT_TIMESTAMP' })
-	@ApiProperty()
+	@ApiProperty({ type: String })
 	createdAt: string;
 
 	@Column({ type: 'timestamp', default: 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
-	@ApiProperty()
+	@ApiProperty({ type: String })
 	updatedAt: string;
 
 	@Column({ type: 'timestamp', nullable: true })
 	@DeleteDateColumn()
-	@ApiProperty()
+	@ApiProperty({ type: String })
 	deletedAt?: string;
 }

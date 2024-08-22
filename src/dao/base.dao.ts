@@ -41,11 +41,11 @@ class BaseDao<BaseEntity extends Base> {
 		return !!result.affected;
 	}
 
-	create(data: BaseEntity, options: SaveOptions): Promise<BaseEntity> {
+	create(data: BaseEntity, options: SaveOptions = {}): Promise<BaseEntity> {
 		return this.model.save(data, options);
 	}
 
-	bulkInsert(data: BaseEntity[], options: SaveOptions): Promise<BaseEntity[]> {
+	bulkInsert(data: BaseEntity[], options: SaveOptions = {}): Promise<BaseEntity[]> {
 		options.chunk ??= CHUNK_SIZE;
 		return this.model.save(data, options);
 	}
@@ -56,7 +56,7 @@ class BaseDao<BaseEntity extends Base> {
 
 	findOne(
 		where: FindOptionsWhere<BaseEntity>,
-		options: FindOneOptions<BaseEntity>,
+		options: FindOneOptions<BaseEntity> = {},
 	): Promise<BaseEntity | null> {
 		options.where = this.getDeleteParams(where);
 		return this.model.findOne(options);
@@ -64,7 +64,7 @@ class BaseDao<BaseEntity extends Base> {
 
 	findMany(
 		where: FindOptionsWhere<BaseEntity>,
-		options: FindManyOptions<BaseEntity>,
+		options: FindManyOptions<BaseEntity> = {},
 	): Promise<BaseEntity[]> {
 		options.where = this.getDeleteParams(where);
 
@@ -75,7 +75,7 @@ class BaseDao<BaseEntity extends Base> {
 
 	async findManyAndCount(
 		where: FindOptionsWhere<BaseEntity>,
-		options: FindManyOptions<BaseEntity>,
+		options: FindManyOptions<BaseEntity> = {},
 	): Promise<Paginated<BaseEntity>> {
 		options.where = this.getDeleteParams(where);
 
