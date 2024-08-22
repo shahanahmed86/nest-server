@@ -18,7 +18,7 @@ async function bootstrap() {
 	SwaggerModule.setup('api-docs', app, document, {
 		customCss: '.swagger-ui .topbar { display: none }',
 		customSiteTitle: name,
-		customfavIcon: `${configs.app.baseUrl}/favicon.ico`,
+		customfavIcon: `${configs.app.url}/favicon.ico`,
 	});
 
 	await app.listen(configs.app.port, () =>

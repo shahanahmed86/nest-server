@@ -7,7 +7,7 @@ import { configs } from 'src/config';
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
 	use(...args: [Request, Response, NextFunction]) {
-		morgan.token('host', () => configs.app.baseUrl);
+		morgan.token('host', () => configs.app.url);
 
 		morgan.token('error', (_, res: Response) => {
 			if (!res.locals.error) return '';

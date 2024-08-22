@@ -12,7 +12,7 @@ const Configs = z.object({
 			.length(4)
 			.transform((arg) => parseInt(arg, 10))
 			.default('7000'),
-		baseUrl: z.string().url('Invalid Base URL').default('http://localhost'),
+		url: z.string().url('Invalid Base URL').default('http://localhost'),
 	}),
 	jwt: z.object({
 		secret: z.string().min(1).default('jwt-secret'),
@@ -66,7 +66,7 @@ const allEnvs = {
 		protocol: process.env.APP_PROTOCOL,
 		host: process.env.APP_HOST,
 		port: process.env.APP_PORT,
-		get baseUrl() {
+		get url() {
 			return `${this.protocol}://${this.host}`;
 		},
 	},
