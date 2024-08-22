@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { RouterModule } from '@nestjs/core';
+import { AdminsModule } from './api/admins/admins.module';
 import { GendersModule } from './api/genders/genders.module';
 import { RolesModule } from './api/roles/roles.module';
 import { AppController } from './app.controller';
@@ -28,11 +29,13 @@ import typeorm from './typeorm';
 				children: [
 					{ path: 'v1/genders', module: GendersModule },
 					{ path: 'v1/roles', module: RolesModule },
+					{ path: 'v1/admins', module: AdminsModule },
 				],
 			},
 		]),
 		GendersModule,
 		RolesModule,
+		AdminsModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
