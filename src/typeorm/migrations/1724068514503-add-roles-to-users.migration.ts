@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner, TableForeignKey } from 'typeorm';
 import { ROLES_TABLE } from '../constants/roles.constant';
-import { USERS_TABLE } from '../constants/users.constant';
-
-const FOREIGN_KEY = 'fk_role_id';
+import { USERS_ROLES_FOREIGN_KEY, USERS_TABLE } from '../constants/users.constant';
 
 export class AddRolesToUsersMigration1724068514503 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
@@ -12,12 +10,12 @@ export class AddRolesToUsersMigration1724068514503 implements MigrationInterface
 				columnNames: ['roleId'],
 				referencedColumnNames: ['id'],
 				referencedTableName: ROLES_TABLE,
-				name: FOREIGN_KEY,
+				name: USERS_ROLES_FOREIGN_KEY,
 			}),
 		);
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropForeignKey(USERS_TABLE, FOREIGN_KEY);
+		await queryRunner.dropForeignKey(USERS_TABLE, USERS_ROLES_FOREIGN_KEY);
 	}
 }

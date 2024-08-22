@@ -9,8 +9,8 @@ export class CreateUserMigration1724067310118 implements MigrationInterface {
 				name: USERS_TABLE,
 				indices: [
 					{
-						columnNames: USERS_TABLE_INDEXED_COLUMNS,
-						name: 'idx_email_phone_firstName_last_name',
+						columnNames: USERS_TABLE_INDEXED_COLUMNS.columns,
+						name: USERS_TABLE_INDEXED_COLUMNS.name,
 						isFulltext: true,
 					},
 				],

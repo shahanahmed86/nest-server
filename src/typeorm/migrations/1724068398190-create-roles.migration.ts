@@ -7,7 +7,12 @@ export class CreateRoleMigration1724068398190 implements MigrationInterface {
 		await queryRunner.createTable(
 			new Table({
 				name: ROLES_TABLE,
-				indices: [{ columnNames: ROLES_TABLE_INDEXED_COLUMNS, name: 'idx_name' }],
+				indices: [
+					{
+						columnNames: ROLES_TABLE_INDEXED_COLUMNS.columns,
+						name: ROLES_TABLE_INDEXED_COLUMNS.name,
+					},
+				],
 				columns: base.concat([{ name: 'name', type: 'varchar' }]),
 			}),
 			true,

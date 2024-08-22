@@ -7,7 +7,12 @@ export class CreateGendersMigration1724068602224 implements MigrationInterface {
 		await queryRunner.createTable(
 			new Table({
 				name: GENDERS_TABLE,
-				indices: [{ columnNames: GENDERS_TABLE_INDEXED_COLUMNS, name: 'idx_name' }],
+				indices: [
+					{
+						columnNames: GENDERS_TABLE_INDEXED_COLUMNS.columns,
+						name: GENDERS_TABLE_INDEXED_COLUMNS.name,
+					},
+				],
 				columns: base.concat([{ name: 'name', type: 'varchar' }]),
 			}),
 			true,

@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner, TableForeignKey } from 'typeorm';
 import { GENDERS_TABLE } from '../constants/genders.constant';
-import { USERS_TABLE } from '../constants/users.constant';
-
-const FOREIGN_KEY = 'fk_gender_id';
+import { USERS_GENDERS_FOREIGN_KEY, USERS_TABLE } from '../constants/users.constant';
 
 export class AddGendersToUsersMigration1724069641825 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
@@ -12,12 +10,12 @@ export class AddGendersToUsersMigration1724069641825 implements MigrationInterfa
 				columnNames: ['genderId'],
 				referencedColumnNames: ['id'],
 				referencedTableName: GENDERS_TABLE,
-				name: FOREIGN_KEY,
+				name: USERS_GENDERS_FOREIGN_KEY,
 			}),
 		);
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropForeignKey(USERS_TABLE, FOREIGN_KEY);
+		await queryRunner.dropForeignKey(USERS_TABLE, USERS_GENDERS_FOREIGN_KEY);
 	}
 }
