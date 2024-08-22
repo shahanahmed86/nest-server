@@ -24,12 +24,27 @@ export class PaginatedDto {
 	page?: number;
 }
 
-export class ValidationError {
-	@ApiProperty({ type: String, isArray: true })
-	message: string[];
-
+abstract class BaseValidationError {
 	@ApiProperty({ type: String })
 	error: string;
+
+	@ApiProperty({ type: Number })
+	statusCode: number;
+}
+
+export class ValidationErrors extends BaseValidationError {
+	@ApiProperty({ type: String, isArray: true })
+	message: string[];
+}
+
+export class ValidationError extends BaseValidationError {
+	@ApiProperty({ type: String })
+	message: string;
+}
+
+export class ApiBaseResponse {
+	@ApiProperty({ type: String })
+	message: string;
 
 	@ApiProperty({ type: Number })
 	statusCode: number;

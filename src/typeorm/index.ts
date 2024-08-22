@@ -22,13 +22,9 @@ const typeormConfig: DataSourceOptions = {
 };
 
 export const connectionSource = new DataSource(typeormConfig);
-export default registerAs('typeorm', () => typeormConfig);
-
-connectionSource
-	.initialize()
-	.then(() => {
+export default registerAs('typeorm', () => {
+	connectionSource.initialize().then(() => {
 		console.log('Data Source has been initialized!');
-	})
-	.catch((err) => {
-		console.error('Error during Data Source initialization:', err);
 	});
+	return typeormConfig;
+});

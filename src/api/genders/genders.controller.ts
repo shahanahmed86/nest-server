@@ -1,19 +1,53 @@
-import { Controller, Get, HttpStatus, Query } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
-import { PaginatedDto, ValidationError } from 'src/app.dto';
-import { Genders } from 'src/typeorm/entities/genders.entity';
-import { Paginated } from 'src/types/common.type';
-import { GetAllGendersDto } from './genders.dto';
+import {
+	Controller,
+	Get,
+	HttpException,
+	HttpStatus,
+	Param,
+	ParseUUIDPipe,
+	Query,
+} from '@nestjs/common';
+import {
+	ApiBadRequestResponse,
+	ApiNotFoundResponse,
+	ApiOkResponse,
+	ApiTags,
+} from '@nestjs/swagger';
+import { ApiBaseResponse, PaginatedDto, ValidationErrors } from 'src/app.dto';
+import { GetAllGendersResponse, GetGendersResponse } from './genders.dto';
 import { GendersService } from './genders.service';
 
-@Controller('api/genders')
+@ApiTags('genders')
+@Controller()
 export class GendersController {
 	constructor(private readonly gendersService: GendersService) {}
 
 	@Get()
-	@ApiResponse({ status: HttpStatus.OK, type: GetAllGendersDto })
-	@ApiResponse({ status: HttpStatus.BAD_REQUEST, type: ValidationError })
-	findAll(@Query() query: PaginatedDto): Promise<Paginated<Genders>> {
-		return this.gendersService.findAll(query);
+	@ApiOkResponse({ type: GetAllGendersResponse, description: 'Get all genders' })
+	@ApiBadRequestResponse({ type: ValidationErrors, description: 'Bad request' })
+	async findAll(@Query() query: PaginatedDto): Promise<GetAllGendersResponse> {
+		const data = await this.gendersService.findAll(query);
+		return {
+			statusCode: HttpStatus.OK,
+			message: "You've successfully got all the genders",
+			data,
+		};
+	}
+
+	@Get(':id')
+	@ApiOkResponse({ type: GetGendersResponse, description: 'Get gender' })
+	@ApiNotFoundResponse({ type: ApiBaseResponse, description: 'Gender not found' })
+	@ApiBadRequestResponse({ type: ValidationErrors, description: 'Bad request' })
+	async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<GetGendersResponse> {
+		const data = await this.gendersService.findOne(id);
+		if (!data) {
+			throw new HttpException('Gender not found!', HttpStatus.NOT_FOUND);
+		}
+
+		return {
+			statusCode: HttpStatus.OK,
+			message: "You've successfully got the gender",
+			data,
+		};
 	}
 }
