@@ -1,13 +1,13 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { description, name, version } from '../package.json';
 import { AppModule } from './app.module';
 import { configs } from './config';
-import { ZodFilter } from './library/zod.library';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule, { logger: ['error', 'warn'] });
-	app.useGlobalFilters(new ZodFilter());
+	app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
 	const config = new DocumentBuilder()
 		.setTitle(name)

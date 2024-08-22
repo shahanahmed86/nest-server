@@ -2,15 +2,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Genders } from 'src/typeorm/entities/genders.entity';
 
 export class GetAllGendersDto {
-	@ApiProperty()
+	@ApiProperty({ type: Number })
 	count: number;
 
-	@ApiProperty()
+	@ApiProperty({ type: Number })
 	pages: number;
 
-	@ApiProperty()
+	@ApiProperty({ type: Number })
 	page: number;
 
-	@ApiProperty({ isArray: true, nullable: false, type: () => Genders })
+	@ApiProperty({ isArray: true, type: Genders })
 	rows: Genders[];
 }
