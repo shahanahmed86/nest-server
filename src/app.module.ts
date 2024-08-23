@@ -15,6 +15,7 @@ import { FileUploadMiddleware } from './middleware/fileupload.middleware';
 import { HelmetMiddleware } from './middleware/helmet.middleware';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { RateLimiterMiddleware } from './middleware/rate.middleware';
+import { GlobalModuleTsModule } from './modules/global.module';
 import typeorm from './typeorm';
 
 @Module({
@@ -29,13 +30,14 @@ import typeorm from './typeorm';
 				children: [
 					{ path: 'v1/genders', module: GendersModule },
 					{ path: 'v1/roles', module: RolesModule },
-					{ path: 'v1/admins', module: AdminsModule },
+					{ path: 'admins', module: AdminsModule },
 				],
 			},
 		]),
 		GendersModule,
 		RolesModule,
 		AdminsModule,
+		GlobalModuleTsModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
