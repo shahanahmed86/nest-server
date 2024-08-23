@@ -22,6 +22,9 @@ const typeormConfig: DataSourceOptions = {
 };
 
 export const connectionSource = new DataSource(typeormConfig);
+
+export const queryRunner = connectionSource.createQueryRunner();
+
 export default registerAs('typeorm', () => {
 	connectionSource.initialize().then(() => {
 		console.log('Data Source has been initialized!');

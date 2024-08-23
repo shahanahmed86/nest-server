@@ -11,7 +11,7 @@ import {
 	SaveOptions,
 } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
-import { connectionSource } from '../typeorm';
+import { queryRunner } from '../typeorm';
 import { Base } from '../typeorm/entities/base.entity';
 
 class BaseDao<BaseEntity extends Base> {
@@ -19,12 +19,12 @@ class BaseDao<BaseEntity extends Base> {
 	modelName: string;
 
 	constructor(target: EntityTarget<BaseEntity>, modelName: string) {
-		this.model = connectionSource.getRepository(target);
+		this.model = queryRunner.manager.getRepository(target);
 		this.modelName = modelName;
 	}
 
 	async delete(where: FindOptionsWhere<BaseEntity>): Promise<boolean> {
-		const result = await this.model.softDelete(where);
+		const result = await this.model.softDelete(this.getDeleteParams(where));
 		return !!result.affected;
 	}
 
