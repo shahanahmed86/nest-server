@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { RouterModule } from '@nestjs/core';
+import { JwtModule } from '@nestjs/jwt';
 import { AdminsModule } from './api/admins/admins.module';
 import { GendersModule } from './api/genders/genders.module';
 import { RolesModule } from './api/roles/roles.module';
@@ -24,6 +25,7 @@ import typeorm from './typeorm';
 			isGlobal: true,
 			load: [config, typeorm, redis],
 		}),
+		JwtModule.register({ global: true }),
 		RouterModule.register([
 			{
 				path: 'api',

@@ -9,3 +9,8 @@ export type IndexColumnsOptions<T extends object> = {
 	name: string;
 	columns: (keyof T)[];
 };
+
+export type JwtTokenPayload = {
+	userId: string;
+	role: string;
+};
