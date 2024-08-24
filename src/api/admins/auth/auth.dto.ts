@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsString, IsStrongPassword } from 'class-validator';
 import { ApiBaseResponse } from 'src/app.dto';
 import { Admins } from 'src/typeorm/entities/admins.entity';
 
@@ -9,6 +9,22 @@ export class LoginAdminDto {
 	email: string;
 
 	@IsString()
+	@ApiProperty({ type: String })
+	password: string;
+}
+
+export class ChangePasswordDto {
+	@IsString()
+	@ApiProperty({ type: String })
+	oldPassword: string;
+
+	@IsStrongPassword({
+		minLength: 9,
+		minLowercase: 1,
+		minUppercase: 1,
+		minNumbers: 1,
+		minSymbols: 0,
+	})
 	@ApiProperty({ type: String })
 	password: string;
 }

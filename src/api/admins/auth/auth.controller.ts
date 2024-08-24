@@ -1,4 +1,14 @@
-import { Body, Controller, Get, HttpStatus, Post, Res, UseGuards } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Get,
+	HttpException,
+	HttpStatus,
+	Post,
+	Put,
+	Res,
+	UseGuards,
+} from '@nestjs/common';
 import {
 	ApiBadRequestResponse,
 	ApiBearerAuth,
@@ -11,7 +21,12 @@ import { ApiBaseResponse, ValidationErrors } from 'src/app.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { TransactionService } from 'src/typeorm/transaction/transaction';
 import { JwtTokenPayload } from 'src/types/common.type';
-import { LoggedInAdminSuccessDto, LoginAdminDto, LoginAdminSuccessDto } from './auth.dto';
+import {
+	ChangePasswordDto,
+	LoggedInAdminSuccessDto,
+	LoginAdminDto,
+	LoginAdminSuccessDto,
+} from './auth.dto';
 import { AuthService } from './auth.service';
 
 @ApiTags('admins/auth')
@@ -59,6 +74,31 @@ export class AuthController {
 				statusCode: HttpStatus.OK,
 				message: "You've a valid logged in session",
 				user,
+			};
+		});
+	}
+
+	@Put('set-password')
+	@UseGuards(AuthGuard)
+	@ApiBearerAuth('Authorization')
+	@ApiResponse({ type: ApiBaseResponse, status: HttpStatus.OK })
+	@ApiUnauthorizedResponse({ type: ApiBaseResponse, status: HttpStatus.UNAUTHORIZED })
+	@ApiBadRequestResponse({ type: ValidationErrors, description: 'Bad request' })
+	async setPassword(
+		@Res({ passthrough: true }) res: Response<any, { user: JwtTokenPayload }>,
+		@Body() data: ChangePasswordDto,
+	) {
+		return this.transaction.withTransaction<ApiBaseResponse>(async () => {
+			const user = await this.auth.getUser(res.locals.user);
+
+			const matched = this.auth.comparePassword(user.password, data.oldPassword);
+			if (!matched) throw new HttpException('Old password mismatched', HttpStatus.CONFLICT);
+
+			await this.auth.setPassword(user.id, data.password);
+
+			return {
+				statusCode: HttpStatus.OK,
+				message: "You've a successfully changed your password",
 			};
 		});
 	}

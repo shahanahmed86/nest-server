@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { configs } from 'src/config';
 import AdminsDao from 'src/dao/admins.dao';
-import { compareSync } from 'src/library/bcrypt.library';
+import { compareSync, hashSync } from 'src/library/bcrypt.library';
 import { Admins } from 'src/typeorm/entities/admins.entity';
 import { JwtTokenPayload } from 'src/types/common.type';
 import { ONE_SECOND } from 'src/utils/constant.util';
@@ -23,10 +23,14 @@ export class AuthService {
 		);
 		if (!user) throw new HttpException('Not Authenticated', HttpStatus.UNAUTHORIZED);
 
-		const match = compareSync(data.password, user.password);
-		if (!match) throw new HttpException('Not Authenticated', HttpStatus.UNAUTHORIZED);
+		const isMatched = this.comparePassword(user.password, data.password);
+		if (!isMatched) throw new HttpException('Not Authenticated', HttpStatus.UNAUTHORIZED);
 
 		return user;
+	}
+
+	comparePassword(oldPasswordHash: string, password: string): boolean {
+		return compareSync(password, oldPasswordHash);
 	}
 
 	async getUser(payload: JwtTokenPayload): Promise<Admins> {
@@ -46,5 +50,9 @@ export class AuthService {
 		const refreshToken = await this.jwt.signAsync(payload, { expiresIn: refreshExpiry, secret });
 
 		return [accessToken, refreshToken];
+	}
+
+	async setPassword(userId: string, password: string): Promise<void> {
+		await this.dao.update({ id: userId }, { password: hashSync(password) });
 	}
 }
