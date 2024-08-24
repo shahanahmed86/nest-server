@@ -1,6 +1,7 @@
 import { Paginated } from 'src/types/common.type';
 import { CHUNK_SIZE, LIMIT, PAGE } from 'src/utils/constant.util';
 import {
+	DeepPartial,
 	EntityTarget,
 	FindManyOptions,
 	FindOneOptions,
@@ -41,11 +42,11 @@ class BaseDao<BaseEntity extends Base> {
 		return !!result.affected;
 	}
 
-	create(data: BaseEntity, options: SaveOptions = {}): Promise<BaseEntity> {
+	create(data: DeepPartial<BaseEntity>, options: SaveOptions = {}): Promise<BaseEntity> {
 		return this.model.save(data, options);
 	}
 
-	bulkInsert(data: BaseEntity[], options: SaveOptions = {}): Promise<BaseEntity[]> {
+	bulkInsert(data: DeepPartial<BaseEntity>[], options: SaveOptions = {}): Promise<BaseEntity[]> {
 		options.chunk ??= CHUNK_SIZE;
 		return this.model.save(data, options);
 	}
